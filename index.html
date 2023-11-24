@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QR Code Generator</title>
+    <script src="./build/qrcode.js"></script>
+    <script src="app.js"></script>
+</head>
+<body>
+    <style>
+        body {
+    background-image: url('background.png'); /* Replace with the path to your image */
+    background-color: #d2e7d4; /* Default background color */
+    background-position: bottom;
+    background-repeat: no-repeat;
+    background-size: contain; /* This will ensure it covers the entire screen and scales properly */
+    margin: 0;
+    padding: 0;
+    height: 100vh; /* This makes sure your body is at least the height of the viewport */
+    font-family:system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+    .container {
+    width: 80%;
+    margin: 0 auto;
+}
+
+@media (max-width: 600px) {
+    .container {
+        width: 95%;
+    }
+}
+.button {
+    background-color: #8aad88; /* Farm-theme color */
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    transition: all 0.3s;
+    font-family: 'Merriweather', serif; /* Example font */
+}
+
+.button:hover {
+    box-shadow: 0 6px 12px 0 rgba(0,0,0,0.3);
+    background-color: #7a9b76; /* Slightly darker shade */
+}
+
+.content-wrap {
+    flex:1
+}
+
+
+
+.footer {
+    color: #fff; /* Footer text color */
+    text-align: center;
+    line-height: 50px; /* Center the content vertically */
+    position: absolute;
+    bottom: 0px;
+    width: 100vw;
+}
+
+
+/* Add similar media queries and styles for other elements as needed */
+
+    </style>
+    <div class="content-wrap" style="display: flex;
+    justify-content: center;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-content: center;
+    align-items: center;text-align: center;">
+    <h1>Welcome to QR Code Farm!</h1>
+    <span style="width:max(500px,50vw)">This QR Code Generator was made using <a href="https://github.com/soldair/node-qrcode" target="_blank">node-qrcode</a> as a completely client-side and open source QR Code Generator. 
+        <br>Instead of trusting that QR Code Creator and generator sites aren't harvesting your data, use a trusted open source option! Especially important in the age of crypto self/non custody!</span>
+    
+    <br>
+        <input style="    width: min(300px,50vw);
+        background-color: cornsilk;
+        font-size: large;" oninput="generateQRCode()" type="text" id="qrText" placeholder="Enter text for QR code">
+    <!--<button onclick="generateQRCode()">Generate QR Code</button>-->
+    <br>
+   <!-- <img src="cloud.png"  style="position: absolute;z-index: -1; top: 25vh;">-->
+
+    
+        <details>   <summary style="    text-align: center;">Options</summary><br>
+            <div >
+    <label for="darkColor">Dark Color:</label>
+    <input type="color" id="darkColor" name="darkColor" value="#000000" onchange="adjustDarkColor()">
+    
+    <label for="lightColor">Light Color:</label>
+    <input type="color" id="lightColor" name="lightColor" value="#ffffff" onchange="adjustLightColor()">
+    </div><br>
+    <label for="imageUpload">QR Logo:    </label><input type="file" id="imageUpload" accept="image/*" onchange="generateQRCode()">
+    <br><br>
+    <label for="marginSlider">Margin Size:</label>
+    <input oninput="generateQRCode()" type="range" id="marginSlider" min="0" max="10" value="1">
+    <br><br>
+    <label for="sizeSlider">QR Size:</label>
+    <input oninput="generateQRCode()" type="range" id="sizeSlider" min="1" max="12" value="4">
+</details>
+
+<div>
+    
+</div>
+<br>
+<br>
+    <div id="qrCode">
+        <canvas id="qrCanvas">
+
+        </canvas>
+        
+        <!--<img id="image">-->
+    </div><a id="downloadBtn" href="#" download="canvasImage.png" title="Download" style="display:none;background:#6c9b42;">
+        Download
+     </a>
+     <br><br>
+     <span style="width:max(500px,50vw)">This website is also able to be run entirely offline, which again allows for absolute confidence in the QR Code creation process. Download the repo here: (Link coming soon)</span>
+    
+</div>
+
+<footer class="footer">The word "QR Code" is registered trademark of:
+    DENSO WAVE INCORPORATED</footer>
+
+    <script>
+        
+
+        document.getElementById('downloadBtn').addEventListener('click', function() {
+    var canvas = document.getElementById('qrCanvas');
+    var dataURL = canvas.toDataURL('image/png');
+    this.href = dataURL;
+});
+      </script>
+</body>
+</html>
